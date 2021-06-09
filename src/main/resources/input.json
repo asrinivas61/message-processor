@@ -1,0 +1,61 @@
+[
+  {
+    "productType" : "apple",
+    "value" : 10,
+    "sales" : 10,
+    "operation" : ""
+  },
+  {
+    "productType" : "apple",
+    "value" : 10,
+    "sales" : 10,
+    "operation" : ""
+  },
+  {
+    "productType" : "apple",
+    "value" : 10,
+    "sales" : 10,
+    "operation" : ""
+  },
+  {
+    "productType" : "apple",
+    "value" : 10,
+    "sales" : 1,
+    "operation" : "add"
+  },
+  {
+    "productType" : "apple",
+    "value" : 10,
+    "sales" : 10,
+    "operation" : ""
+  },
+  {
+    "productType" : "orange",
+    "value" : 10,
+    "sales" : 20,
+    "operation" : ""
+  },
+  {
+    "productType" : "apple",
+    "value" : 10,
+    "operation" : "subtract"
+  },
+  {
+    "productType" : "orange",
+    "value" : 10,
+    "sales" : 20,
+    "operation" : ""
+  },
+  {
+    "productType" : "orange",
+    "value" : 10,
+    "sales" : 20,
+    "operation" : ""
+  },
+  {
+    "productType" : "orange",
+    "value" : 10,
+    "sales" : 20,
+    "operation" : ""
+  }
+]
