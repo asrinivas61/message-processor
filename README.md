@@ -10,14 +10,14 @@ A message processing application which accepts a predefined set of incoming mess
  1. This application was built in such a way that it can be configured for 2 main processing properties and by default their values are set as below.
     - LOG_COUNTER - 3
     - ADJUSTMENT_COUNTER - 5
- 2. Made the application compatible to accept incoming messages from 3 different sources.
+ 2. Made the application compatible to accept incoming messages from 2 different sources.
     - Command line input.
     - A plain text file containing messages as strings lines.
-    - A JSON file with predefined message properties.
  3. Assumption was like the incoming messages must be in one of the below 3 predefined formats
-    - Type 1 - `apple at 10p`
-    - Type 2 - `20 apple at 30p`
-    - Type 3 - `add 10p apple`
+    - Type 1 - `apple at 10p` Ex: `{productName} at {price}`
+    - Type 2 - `20 apple at 30p` Ex: `{sales} {productName} at {price}`
+    - Type 3 - `add 10p apple` Ex: `{operation} {price} {productName}`
+ 4. If the incoming message is in any format other than the above mentioned 3 formats those messages will not be processed.
 
 ### Pre-Requisites 🔧
 * Should be installed Java version 8 or higher in the machine.

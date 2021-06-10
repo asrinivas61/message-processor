@@ -33,15 +33,19 @@ public class MessageProcessor {
         float total_qty = 0;
         float total_sales = 0;
 
-        if (productRepository.contains(message.getProductType())) {
-            Product product = productRepository.get(message.getProductType());
-            total_sales = (message.getSales() * message.getValue()) + product.getPrice();
-            total_qty = message.getSales() + product.getQuantity();
+        try {
+            if (productRepository.contains(message.getProductType())) {
+                Product product = productRepository.get(message.getProductType());
+                total_sales = (message.getSales() * message.getValue()) + product.getPrice();
+                total_qty = message.getSales() + product.getQuantity();
 
-            Product new_product = new Product(total_qty, total_sales);
-            productRepository.append(message.getProductType(), new_product);
-        } else {
-            productRepository.append(message.getProductType(), new Product(message.getSales(), message.getSales() * message.getValue()));
+                Product new_product = new Product(total_qty, total_sales);
+                productRepository.append(message.getProductType(), new_product);
+            } else {
+                productRepository.append(message.getProductType(), new Product(message.getSales(), message.getSales() * message.getValue()));
+            }
+        } catch(Exception e) {
+            System.out.println(e.getStackTrace());
         }
     }
 
@@ -58,32 +62,36 @@ public class MessageProcessor {
 
         List<Message> typeIIImessages = messageRepository.getTypeIIIMessages(from);
 
-        if (typeIIImessages!=null && typeIIImessages.size()>=1) {
-            List<Message> opMessages = messages.stream().map(message -> {
-                for (Message typeIIIMessage : typeIIImessages) {
-                    if (message.getProductType().equalsIgnoreCase(typeIIIMessage.getProductType())) {
-                        float oldPrice = message.getValue();
-                        switch (typeIIIMessage.getOperation().toLowerCase()) {
-                            case MessageClassifier.ADD:
-                                message.setValue(oldPrice + typeIIIMessage.getValue());
-                                break;
+        try {
+            if (typeIIImessages!=null && typeIIImessages.size()>=1) {
+                List<Message> opMessages = messages.stream().map(message -> {
+                    for (Message typeIIIMessage : typeIIImessages) {
+                        if (message.getProductType().equalsIgnoreCase(typeIIIMessage.getProductType())) {
+                            float oldPrice = message.getValue();
+                            switch (typeIIIMessage.getOperation().toLowerCase()) {
+                                case MessageClassifier.ADD:
+                                    message.setValue(oldPrice + typeIIIMessage.getValue());
+                                    break;
 
-                            case MessageClassifier.SUBTRACT:
-                                message.setValue(oldPrice - typeIIIMessage.getValue());
-                                break;
+                                case MessageClassifier.SUBTRACT:
+                                    message.setValue(oldPrice - typeIIIMessage.getValue());
+                                    break;
 
-                            case MessageClassifier.MULTIPLY:
-                                message.setValue(oldPrice * typeIIIMessage.getValue());
-                                break;
+                                case MessageClassifier.MULTIPLY:
+                                    message.setValue(oldPrice * typeIIIMessage.getValue());
+                                    break;
 
+                            }
                         }
                     }
-                }
-                return message;
-            }).collect(Collectors.toList());
+                    return message;
+                }).collect(Collectors.toList());
 
-            updateAdjustments(opMessages);
-            productRepository.view();
+                updateAdjustments(opMessages);
+                productRepository.view();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
         }
     }
 
